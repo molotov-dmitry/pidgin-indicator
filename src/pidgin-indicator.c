@@ -41,7 +41,11 @@
 #include <savedstatuses.h>
 #include <version.h>
 
+#ifdef HAVE_AYATANA_APPINDICATOR
+#include <libayatana-appindicator/app-indicator.h>
+#else
 #include <libappindicator/app-indicator.h>
+#endif
 
 #include "docklet.h"
 

@@ -96,7 +96,20 @@ PKG_CHECK_MODULES(GTK, [gtk+-2.0])
 AC_SUBST(GTK_LIBS)
 AC_SUBST(GTK_CFLAGS)
 
-PKG_CHECK_MODULES(INDICATOR, [appindicator3-0.1])
+PKG_CHECK_EXISTS([ayatana-appindicator3-0.1],
+                 [have_ayatana_appindicator="yes"],
+                 [have_ayatana_appindicator="no"])
+PKG_CHECK_EXISTS([appindicator3-0.1],
+                 [have_ubuntu_appindicator="yes"],
+                 [have_ubuntu_appindicator="no"])
+
+if test "x$have_ayatana_appindicator" = "xyes" ||
+   test "x$have_ubuntu_appindicator" = "xno"; then
+	PKG_CHECK_MODULES(INDICATOR, [ayatana-appindicator3-0.1])
+	AC_DEFINE(HAVE_AYATANA_APPINDICATOR, 1, [ayatana-appindicator present])
+else
+	PKG_CHECK_MODULES(INDICATOR, [appindicator3-0.1])
+fi
 AC_SUBST(INDICATOR_LIBS)
 AC_SUBST(INDICATOR_CFLAGS)
 
